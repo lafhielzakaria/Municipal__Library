@@ -11,4 +11,7 @@ class category extends Model
       'id',
       'name',
     ];
+    public function Books(){
+     return $this->belongsTo (Book::class);
+    }
 }

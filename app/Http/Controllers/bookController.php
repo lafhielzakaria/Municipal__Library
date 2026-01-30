@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\category;
 
 use function Ramsey\Uuid\v1;
 
@@ -12,7 +13,8 @@ class bookController extends Controller
     //
     public function createBook (){
         echo "create book";
-        return view('book.create');
+        $categories = category::all ();
+        return view('book.create' , compact ('categories'));
     }
       public function geteditBookPage ($id){
      $bookselected = Book::find($id); 
@@ -21,8 +23,8 @@ class bookController extends Controller
        public function editBook (Request $request,$id){
        $request->validate([
             'title' => 'required|max:255',
+            'author' => 'required|max:255',
         ]);
-        var_dump ($id); 
         $bookselected = Book::find($id);
         $bookselected->update ($request->all()); 
         return redirect()->route('index')
@@ -42,11 +44,14 @@ class bookController extends Controller
     }
     public function store(Request $request)
     {
+        $selectedTeam = $request->get('category_id');
+        // var_dump ($selectedTeam);
         $request->validate([
             'title' => 'required|max:255',
+            'author' => 'required|max:255',
         ]);
         Book::create($request->all());
         return redirect()->route('index')
-            ->with('success', 'Post created successfully.');
+            ->with('success', 'book created successfully.');
     }
 }

@@ -18,7 +18,8 @@
       <form action="{{ route('book.edit', $bookselected->id) }}" method="get">
              @csrf
          <label>Enter new book title</label>
-        <input type="text" name = "title">
+        <input placeholder="{{$bookselected->title}}" type="text" name = "title">
+        <input placeholder="{{$bookselected->author}}" type="text" name = "author">
         <button>submit</button>
       </form>
      
